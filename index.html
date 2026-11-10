@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Andrés Rivera – Creative Video Portfolio</title>
+  <meta name="description" content="Video editor and content creator. High-performing video content that captivates audiences and drives results.">
+  <meta property="og:title" content="Andrés Rivera – Creative Video Portfolio">
+  <meta property="og:description" content="Video editor and content creator. DaVinci Resolve, Premiere Pro, After Effects.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://cdn.corrra.com/users/bDLK4VQzApQWzRc2sCHgtarRIsE87FMR/poster/e35ad156-76e1-43fc-991a-2fa270e14f56.png">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --card: #1f1f20;
+      --card-hi: #272728;
+      --text: #f4f4f4;
+      --dim: #8b8b8f;
+      --cyan: #33f0e0;
+      --mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+      --ease: cubic-bezier(.2, .7, .2, 1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      min-height: 100vh;
+      font-family: var(--mono);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 0% 0%, #1d1d1f 0%, rgba(29,29,31,0) 60%),
+        var(--bg);
+      background-attachment: fixed;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.locked { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    img { display: block; max-width: 100%; }
+    :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+    /* ---------- SHELL ---------- */
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(250px, 300px) minmax(0, 900px);
+      gap: 48px;
+      justify-content: center;
+      padding: 30px 52px 60px;
+    }
+    .side {
+      position: sticky; top: 30px;
+      height: calc(100vh - 60px);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .side > div:first-child { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+    .profile { display: flex; align-items: center; gap: 8px; flex: none; }
+    .profile h1 { font-size: 23px; font-weight: 500; letter-spacing: .02em; line-height: 1.1; }
+    .profile small { display: block; font-size: 11px; line-height: 1.25; }
+    .profile small + small { color: #5a5a5d; }
+    .bio { margin-top: 38px; color: #7c7c80; font-size: 12.5px; line-height: 1.22; letter-spacing: .03em; }
+    .bio p + p { margin-top: 24px; }
+    .bio-wrap { overflow: auto; scrollbar-width: none; flex: 1; padding-right: 6px; }
+    .bio-wrap::-webkit-scrollbar { display: none; }
+    .socials { display: flex; gap: 10px; padding-top: 18px; }
+    .round {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.75);
+      display: grid; place-items: center;
+      transition: background .25s, color .25s, transform .25s var(--ease);
+    }
+    .round:hover { background: #fff; color: #000; transform: translateY(-3px); }
+    .round svg { width: 18px; height: 18px; }
+    .round b { font-size: 13px; font-weight: 500; letter-spacing: -.02em; }
+
+    /* ---------- TOP BAR ---------- */
+    .topbar {
+      position: sticky; top: 24px; z-index: 20;
+      height: 56px; padding: 0 12px 0 10px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-radius: 28px;
+      background: rgba(34,34,36,.55);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      font-size: 12px; letter-spacing: .03em;
+    }
+    .menu-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.7);
+      display: grid; place-items: center; transition: transform .3s var(--ease), background .25s;
+    }
+    .menu-btn:hover { background: rgba(255,255,255,.1); }
+    .menu-btn i, .menu-btn i::before { display: block; width: 16px; height: 1.5px; background: #fff; border-radius: 2px; transition: transform .3s var(--ease); }
+    .menu-btn i { position: relative; transform: translateY(-3px); }
+    .menu-btn i::before { content: ""; position: absolute; top: 6px; left: 0; }
+    .menu-btn[aria-expanded="true"] i { transform: rotate(45deg); }
+    .menu-btn[aria-expanded="true"] i::before { transform: translateY(-6px) rotate(-90deg); top: 6px; }
+    .menu {
+      position: absolute; right: 0; top: 64px; width: 190px; padding: 10px;
+      border-radius: 22px;
+      background: rgba(28,28,30,.82);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid rgba(255,255,255,.1);
+      box-shadow: 0 20px 50px rgba(0,0,0,.5);
+      opacity: 0; transform: translateY(-8px) scale(.97); transform-origin: top right;
+      pointer-events: none; transition: opacity .25s, transform .3s var(--ease);
+    }
+    .menu.open { opacity: 1; transform: none; pointer-events: auto; }
+    .menu a, .menu button {
+      display: block; width: 100%; padding: 11px 10px; text-align: center; border-radius: 14px;
+      font-size: 12px; color: #d4d4d6; transition: background .2s, color .2s;
+    }
+    .menu a:hover, .menu button:hover, .menu a.current { background: rgba(255,255,255,.08); color: #fff; }
+    .menu hr { border: 0; height: 1px; background: rgba(255,255,255,.08); margin: 6px 8px; }
+
+    /* ---------- VIEWS ---------- */
+    .view { display: none; }
+    .view.active { display: block; animation: enter .65s var(--ease) both; }
+    @keyframes enter { from { opacity: 0; transform: translateY(20px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+    @keyframes rise { from { opacity: 0; transform: translateY(26px) scale(.975); } to { opacity: 1; transform: none; } }
+    .view.active .stagger > * { animation: rise .7s var(--ease) both; animation-delay: calc(var(--i, 0) * 70ms + 120ms); }
+    .view h2 { font-size: 24px; font-weight: 500; letter-spacing: .02em; margin: 38px 0 26px; }
+    .view.home { margin-top: 10px; }
+
+    /* ---------- CARDS ---------- */
+    .card {
+      position: relative; overflow: hidden; display: block;
+      background: var(--card); border-radius: 36px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.035);
+      transition: transform .5s var(--ease), background .3s;
+    }
+    a.card:hover { transform: translateY(-4px); }
+    .card .label { position: absolute; top: 20px; left: 20px; font-size: 12.5px; z-index: 3; letter-spacing: .03em; }
+    .go {
+      position: absolute; right: 16px; bottom: 16px; z-index: 4;
+      width: 32px; height: 32px; border-radius: 50%; background: #fff; color: #000;
+      display: grid; place-items: center; transition: transform .45s var(--ease);
+    }
+    .go svg { width: 12px; height: 12px; }
+    a.card:hover .go, .row:hover .go { transform: rotate(45deg) scale(1.1); }
+
+    .bento { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+    .col { display: grid; gap: 10px; align-content: start; }
+    .sub { display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px; }
+    .h-projects { height: 390px; }
+    .h-tools { height: 240px; }
+    .h-exp { height: 350px; }
+    .h-small { height: 200px; }
+
+    /* projects collage */
+    .collage { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); }
+    .collage .c { overflow: hidden; }
+    .collage .c > div { animation: scrollY var(--d, 32s) linear infinite; animation-delay: var(--delay, 0s); will-change: transform; }
+    .collage .c:nth-child(2) > div { animation-direction: reverse; }
+    .collage img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    @keyframes scrollY { to { transform: translateY(-50%); } }
+    .collage-fade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(31,31,32,0) 28%, rgba(31,31,32,.55) 55%, rgba(31,31,32,.97) 100%); }
+    .big-label {
+      position: absolute; inset: 0; z-index: 2; display: grid; place-items: center;
+      font-size: 22px; letter-spacing: .08em; text-shadow: 0 2px 18px rgba(0,0,0,.55);
+      transition: letter-spacing .5s var(--ease);
+    }
+    a.card:hover .big-label { letter-spacing: .14em; }
+
+    /* tools */
+    .tools {
+      background: linear-gradient(135deg, #2a35d6 0%, #2d6df0 38%, #2ee9e6 78%, #3dffe6 100%);
+      background-size: 160% 160%;
+      animation: drift 9s ease-in-out infinite alternate;
+    }
+    @keyframes drift { from { background-position: 0% 0%; } to { background-position: 100% 100%; } }
+    .tools::before {
+      content: ""; position: absolute; inset: 0; opacity: .22;
+      background-image: radial-gradient(rgba(255,255,255,.9) 1px, transparent 1.2px);
+      background-size: 10px 10px;
+      -webkit-mask-image: linear-gradient(180deg, #000, transparent 85%);
+              mask-image: linear-gradient(180deg, #000, transparent 85%);
+    }
+    .apps { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .app {
+      width: 50px; height: 50px; border-radius: 16px; display: grid; place-items: center;
+      font-size: 21px; font-weight: 500; color: rgba(255,255,255,.55);
+      background: rgba(111, 84, 226, .78);
+      border: 3px solid rgba(255,255,255,.92);
+      box-shadow: 0 8px 24px rgba(10,10,80,.35), inset 0 0 14px rgba(255,255,255,.2);
+      animation: bob 4.6s ease-in-out infinite; animation-delay: var(--bd, 0s);
+    }
+    .app.dv { background: #22222a; }
+    .app.dv i { width: 24px; height: 24px; border-radius: 50%;
+      background: conic-gradient(from 20deg, #ff5a5a, #ffb23d, #4bd47f, #3d9bff, #b86dff, #ff5a5a);
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 5px, #000 5.5px); mask: radial-gradient(circle at 50% 50%, transparent 5px, #000 5.5px); }
+    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+    /* experience + contact art */
+    .exp {
+      background:
+        radial-gradient(120% 40% at 50% 98%, rgba(120,140,190,.20), transparent 70%),
+        linear-gradient(180deg, #090b0f 0%, #121316 45%, #1c1c1e 100%);
+      border: 6px solid #111112; box-shadow: none;
+    }
+    .exp::after {
+      content: ""; position: absolute; left: -10%; right: -10%; bottom: -2px; height: 36%; opacity: .5;
+      background: radial-gradient(60% 100% at 50% 100%, rgba(255,170,110,.18), transparent 70%);
+      transition: opacity .5s, transform .6s var(--ease);
+    }
+    a.exp:hover::after { opacity: 1; transform: translateY(-8px); }
+    .exp .big-label { font-size: 20px; letter-spacing: .04em; }
+    .contact-card { background: #050506; border: 6px solid #111112; box-shadow: none; }
+    .planet {
+      position: absolute; left: 50%; bottom: -92%; width: 150%; aspect-ratio: 1; transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 0%, #121214 0%, #050506 60%);
+      box-shadow: 0 -1.5px 0 rgba(255,255,255,.95), 0 -6px 18px rgba(255,255,255,.45), 0 -26px 60px rgba(150,170,255,.25), inset 0 10px 26px rgba(255,255,255,.18);
+      transition: transform .7s var(--ease), box-shadow .5s;
+    }
+    a.card:hover .planet { transform: translateX(-50%) translateY(-18px); box-shadow: 0 -1.5px 0 #fff, 0 -8px 24px rgba(255,255,255,.7), 0 -34px 80px rgba(150,170,255,.4), inset 0 10px 26px rgba(255,255,255,.25); }
+    .contact-wide { height: 170px; margin-top: 10px; }
+    .contact-wide .planet { bottom: -170%; width: 90%; }
+
+    /* clients */
+    .clients { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4px; }
+    .stars { display: flex; gap: 5px; margin-bottom: 8px; }
+    .stars svg { width: 14px; height: 14px; fill: var(--cyan); animation: pop .6s var(--ease) both; animation-delay: calc(var(--s) * 110ms + 400ms); }
+    @keyframes pop { from { opacity: 0; transform: scale(0) rotate(-40deg); } to { opacity: 1; transform: none; } }
+    .clients .pct { font-size: 18px; letter-spacing: .02em; }
+    .clients small { font-size: 10px; color: var(--dim); letter-spacing: .04em; }
+    .faces { display: flex; gap: 4px; margin-top: 18px; }
+    .faces svg { width: 30px; height: 30px; border-radius: 50%; transition: transform .3s var(--ease); }
+    .faces svg:hover { transform: translateY(-4px); }
+
+    /* ---------- PROJECT LIST ---------- */
+    .list { display: grid; gap: 10px; }
+    .row {
+      position: relative; display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+      height: 108px; padding: 9px; border-radius: 36px; background: var(--card);
+      transition: transform .45s var(--ease), background .3s;
+    }
+    .row:hover { background: var(--card-hi); transform: translateX(6px); }
+    .row .thumb { width: 90px; height: 90px; border-radius: 24px; overflow: hidden; flex: none; background: #111; }
+    .row .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+    .row:hover .thumb img { transform: scale(1.12); }
+    .row .name { font-size: 13px; letter-spacing: .03em; align-self: center; }
+    .row .tag { margin-left: auto; margin-right: 56px; font-size: 10px; color: var(--dim); letter-spacing: .08em; text-transform: uppercase; opacity: 0; transform: translateX(8px); transition: .4s var(--ease); }
+    .row:hover .tag { opacity: 1; transform: none; }
+    .row .go { right: 20px; bottom: 14px; }
+
+    /* ---------- ABOUT ---------- */
+    .about { display: grid; grid-template-columns: 1.7fr 1fr; gap: 10px; }
+    .exp-card { padding: 28px 18px 24px; border-radius: 36px; background: var(--card); }
+    .exp-card h3, .lang-h { font-size: 14px; font-weight: 500; letter-spacing: .06em; margin-bottom: 18px; }
+    .jobs { list-style: none; display: grid; gap: 14px; padding-left: 0; }
+    .jobs li { position: relative; padding-left: 13px; font-size: 13px; letter-spacing: .04em; }
+    .jobs li::before { content: ""; position: absolute; left: 0; top: .62em; width: 4px; height: 4px; border-radius: 50%; background: #fff; }
+    .jobs small { display: block; margin-top: 3px; font-size: 10.5px; color: var(--dim); letter-spacing: .04em; }
+    .exp-card hr { border: 0; height: 1px; background: rgba(255,255,255,.1); margin: 24px 0 22px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pills span { font-size: 10.5px; padding: 5px 11px; border-radius: 999px; border: 1px solid rgba(255,255,255,.28); letter-spacing: .04em; }
+    .about .col .h-clients { height: 236px; }
+    .about .col .h-tools2 { height: 236px; }
+
+    /* ---------- CONTACT ---------- */
+    .email {
+      position: relative; display: block; width: 100%; text-align: left;
+      padding: 14px 20px 14px; border-radius: 28px; background: var(--card);
+      transition: background .3s, transform .4s var(--ease);
+    }
+    .email:hover { background: var(--card-hi); }
+    .email small { display: block; font-size: 10px; letter-spacing: .06em; color: #cfcfd2; margin-bottom: 4px; }
+    .email span { font-size: 18px; letter-spacing: .02em; }
+    .email em { position: absolute; right: 70px; top: 50%; transform: translateY(-50%); font-style: normal; font-size: 10px; letter-spacing: .08em; color: var(--cyan); opacity: 0; transition: opacity .3s; }
+    .email.copied em { opacity: 1; }
+    .email .go { top: 50%; bottom: auto; transform: translateY(-50%); right: 14px; }
+    .email .go:hover { transform: translateY(-50%) rotate(45deg) scale(1.1); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .contact-grid .card { height: 200px; }
+
+    /* ---------- GLASS MODAL ---------- */
+    .modal {
+      position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px;
+      visibility: hidden; pointer-events: none;
+    }
+    .modal.open { visibility: visible; pointer-events: auto; }
+    .backdrop {
+      position: absolute; inset: 0; background: rgba(5,5,8,.45);
+      backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
+      opacity: 0; transition: opacity .45s var(--ease), backdrop-filter .45s var(--ease), -webkit-backdrop-filter .45s var(--ease);
+    }
+    .modal.open .backdrop { opacity: 1; backdrop-filter: blur(14px) saturate(120%); -webkit-backdrop-filter: blur(14px) saturate(120%); }
+    .glass {
+      --ratio: 1.7778;
+      position: relative; width: min(94vw, calc(76vh * var(--ratio) + 28px), 1120px);
+      padding: 14px; border-radius: 34px;
+      background: linear-gradient(135deg, rgba(255,255,255,.20) 0%, rgba(255,255,255,.07) 45%, rgba(255,255,255,.12) 100%);
+      backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border: 1px solid rgba(255,255,255,.28);
+      box-shadow:
+        0 40px 100px rgba(0,0,0,.65),
+        0 0 0 1px rgba(255,255,255,.04),
+        inset 0 1.5px 0 rgba(255,255,255,.45),
+        inset 0 -1px 0 rgba(255,255,255,.08),
+        inset 0 0 40px rgba(255,255,255,.05);
+      opacity: 0; transform: translateY(26px) scale(.94);
+      transition: opacity .45s var(--ease), transform .55s var(--ease);
+    }
+    .glass::before { /* specular streak */
+      content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      background: linear-gradient(115deg, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 28%);
+      mix-blend-mode: screen;
+    }
+    .modal.open .glass { opacity: 1; transform: none; }
+    .glass-head { display: flex; align-items: center; justify-content: space-between; padding: 2px 6px 12px 10px; }
+    .glass-head h3 { font-size: 13px; font-weight: 500; letter-spacing: .06em; text-shadow: 0 1px 8px rgba(0,0,0,.35); }
+    .x {
+      width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+      background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.28);
+      transition: background .25s, transform .35s var(--ease);
+    }
+    .x:hover { background: rgba(255,255,255,.28); transform: rotate(90deg); }
+    .x svg { width: 12px; height: 12px; }
+    .player {
+      position: relative; overflow: hidden; border-radius: 22px; background: #000;
+      aspect-ratio: var(--ratio-css, 16/9); max-height: 76vh; width: 100%;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+    }
+    .player iframe, .player video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+    .player .shield { position: absolute; top: 0; right: 0; width: 76px; height: 64px; z-index: 5; } /* covers Drive's pop-out button */
+    .soon { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 20px; font-size: 12px; letter-spacing: .08em; color: #d9d9dc; }
+    .soon img { position: absolute; inset: -10%; width: 120%; height: 120%; object-fit: cover; filter: blur(26px) brightness(.45) saturate(1.2); }
+    .soon span { position: relative; padding: 10px 18px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 960px) {
+      .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 18px 16px 50px; }
+      .side { position: static; height: auto; margin-bottom: 14px; }
+      .bio-wrap { display: none; }
+      .topbar { top: 12px; }
+      .side .socials { display: none; }
+      .m-bio { display: block !important; }
+    }
+    .m-bio { display: none; margin: 8px 4px 0; color: #7c7c80; font-size: 12.5px; line-height: 1.3; }
+    .m-bio p + p { margin-top: 12px; }
+    .m-socials { display: none; gap: 10px; margin: 28px 0 0; }
+    @media (max-width: 960px) { .m-socials { display: flex; } }
+    @media (max-width: 720px) {
+      .bento, .about { grid-template-columns: 1fr; }
+      .h-projects { height: 340px; } .h-tools { height: 200px; } .h-exp { height: 220px; }
+      .row { height: 92px; border-radius: 30px; } .row .thumb { width: 74px; height: 74px; border-radius: 20px; }
+      .row .tag { display: none; }
+      .about .col .h-clients, .about .col .h-tools2 { height: 200px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .email span { font-size: 14px; }
+      .glass { border-radius: 26px; padding: 10px; } .player { border-radius: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; transition-duration: .001s !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <div>
+      <a class="profile" href="#home" aria-label="Home">
+        <div>
+          <h1>Andrés Rivera</h1>
+          <small>Video Editor</small>
+          <small>Colombia</small>
+        </div>
+      </a>
+      <div class="bio-wrap">
+        <div class="bio">
+          <p data-i18n="bio1">I specialize in crafting high performing video content that captivates audiences and drives results. I’ve helped brands boost engagement, grow their audience, and tell their stories in unforgettable ways.</p>
+          <p data-i18n="bio2">What I Bring to the Table:</p>
+          <p data-i18n="bio3">| Expertise in DaVinci Resolve, Adobe Premiere Pro and After Effects for seamless video editing and motion graphics.</p>
+          <p data-i18n="bio4">| Ability to manage fast-paced projects, meet tight deadlines, and deliver polished, professional results.</p>
+          <p data-i18n="bio5">| A creative mindset that blends data-driven strategies with innovative storytelling to create content that resonates.</p>
+          <p data-i18n="bio6">Let’s Create Something Amazing Together!</p>
+        </div>
+      </div>
+    </div>
+    <div class="socials">
+      <a class="round" href="https://www.instagram.com/thisis_jacques" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a class="round" href="https://www.linkedin.com/in/andresriveraz" target="_blank" rel="noopener" aria-label="LinkedIn"><b>in</b></a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+    <header class="topbar">
+      <time id="clock" aria-live="off"></time>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="menu"><i></i></button>
+      <nav class="menu" id="menu">
+        <a href="#about" data-i18n="m_about">About Me</a>
+        <a href="#projects" data-i18n="m_projects">Projects</a>
+        <a href="#contact" data-i18n="m_contact">Contact</a>
+        <hr>
+        <button id="langBtn" type="button">Español</button>
+      </nav>
+    </header>
+
+    <!-- HOME -->
+    <section class="view home" id="view-home">
+      <div class="m-bio">
+        <p data-i18n="bio1">I specialize in crafting high performing video content that captivates audiences and drives results. I’ve helped brands boost engagement, grow their audience, and tell their stories in unforgettable ways.</p>
+      </div>
+      <div class="bento stagger">
+        <div class="col">
+          <a class="card h-projects" href="#projects" style="--i:0" aria-label="My Projects">
+            <div class="collage" data-collage></div>
+            <div class="collage-fade"></div>
+            <div class="big-label" data-i18n="my_projects">My Projects</div>
+            <span class="go"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l6-6M4 3h5v5"/></svg></span>
+          </a>
+          <div class="sub">
+            <a class="card contact-card h-small" href="#contact" style="--i:3">
+              <span class="label" data-i18n="contact">Contact</span>
+              <div class="planet"></div>
+              <span class="go"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l6-6M4 3h5v5"/></svg></span>
+            </a>
+            <div class="card clients h-small" style="--i:4" data-clients></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card tools h-tools" style="--i:1">
+            <span class="label">MY Tools</span>
+            <div class="apps" data-apps></div>
+          </div>
+          <a class="card exp h-exp" href="#about" style="--i:2">
+            <div class="big-label" data-i18n="experience">Experience</div>
+            <span class="go"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l6-6M4 3h5v5"/></svg></span>
+          </a>
+        </div>
+      </div>
+      <div class="m-socials" data-socials></div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="view" id="view-projects">
+      <h2 data-i18n="my_projects">My Projects</h2>
+      <div class="list stagger" id="projectList"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="view" id="view-about">
+      <h2 data-i18n="about_me">About Me</h2>
+      <div class="about stagger">
+        <div class="exp-card" style="--i:0">
+          <h3 data-i18n="experience">Experience</h3>
+          <ul class="jobs">
+            <li>Video Editor<small>Wink, 2026</small></li>
+            <li>Community manager &amp; Video Editor<small>Expat Group, 2026</small></li>
+            <li>Wedding Videographer<small>Wink, 2025</small></li>
+            <li>Video Editor<small>Bello City Hall, 2024</small></li>
+            <li>Content Creator<small>Colclick, 2023</small></li>
+            <li>Video Editor<small>M+Group, 2019</small></li>
+          </ul>
+          <hr>
+          <div class="lang-h" data-i18n="languages">Languages</div>
+          <div class="pills"><span>English</span><span>Spanish</span><span>French</span></div>
+        </div>
+        <div class="col">
+          <div class="card clients h-clients" style="--i:1" data-clients></div>
+          <div class="card tools h-tools2" style="--i:2">
+            <span class="label">MY Tools</span>
+            <div class="apps" data-apps></div>
+          </div>
+        </div>
+      </div>
+      <a class="card contact-card contact-wide stagger-item" href="#contact" style="animation: rise .7s var(--ease) .5s both">
+        <span class="label" data-i18n="contact">Contact</span>
+        <div class="planet"></div>
+        <span class="go"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l6-6M4 3h5v5"/></svg></span>
+      </a>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="view" id="view-contact">
+      <h2 data-i18n="connect">Let's Connect</h2>
+      <div class="stagger">
+        <button class="email" id="emailBtn" type="button" style="--i:0" aria-label="Copy email">
+          <small>Email</small>
+          <span>andresjxqcs@gmail.com</span>
+          <em id="copied">COPIED ✓</em>
+          <a class="go" href="mailto:andresjxqcs@gmail.com" aria-label="Send email"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
+        </button>
+        <div class="contact-grid" style="--i:1">
+          <a class="card" href="#projects">
+            <div class="collage" data-collage></div>
+            <div class="collage-fade"></div>
+            <div class="big-label" data-i18n="my_projects">My Projects</div>
+            <span class="go"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l6-6M4 3h5v5"/></svg></span>
+          </a>
+          <a class="card exp" href="#about">
+            <div class="big-label" data-i18n="experience">Experience</div>
+            <span class="go"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l6-6M4 3h5v5"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- VIDEO MODAL (glass) -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" aria-hidden="true">
+  <div class="backdrop" data-close></div>
+  <div class="glass" id="glass">
+    <div class="glass-head">
+      <h3 id="mTitle"></h3>
+      <button class="x" type="button" data-close aria-label="Close video">
+        <svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><path d="M2 2l8 8M10 2l-8 8"/></svg>
+      </button>
+    </div>
+    <div class="player" id="player"></div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   1) PROYECTOS  — aquí pegas los enlaces de tus videos
+   ---------------------------------------------------------------------
+   video: enlace de Google Drive (cualquier formato "…/file/d/ID/view…")
+          o un .mp4 directo. Si lo dejas vacío, el modal muestra
+          "Video coming soon".
+   ratio: proporción del video. '16/9' (horizontal), '9/16' (vertical),
+          '1/1' (cuadrado).
+   ===================================================================== */
+const POSTER = id => `https://cdn.corrra.com/users/bDLK4VQzApQWzRc2sCHgtarRIsE87FMR/poster/${id}.png`;
+const PROJECTS = [
+  { name: 'Vaporesso',     thumb: POSTER('e35ad156-76e1-43fc-991a-2fa270e14f56'), video: 'https://drive.google.com/file/d/1pIHWJufjzIKk1H8RpT3pSKB40nZoBhAS/view', ratio: '16/9', tag: '' },
+  { name: 'Wedding Ad',    thumb: POSTER('e2351acf-ed82-4b6e-b43e-554cf1a53168'), video: 'https://drive.google.com/file/d/15DMuLwVCa059IdZeVBHN9ADKFELTrtZ7/view', ratio: '16/9', tag: '' },
+  { name: 'ODD Ball',      thumb: POSTER('b0045340-24da-4945-8097-1aa910212d8e'), video: 'https://drive.google.com/file/d/1BOSJZGPvaLaEgrd8_eB76ZQLBXIP-tVh/view', ratio: '16/9', tag: '' },
+  { name: 'Bioboosters',   thumb: POSTER('ec91e9f3-a685-4258-b595-5f311f32b1b1'), video: 'https://drive.google.com/file/d/1iaHUZNzJJ0ZQk-zboaOtOJ6mpbRuSHAH/view', ratio: '16/9', tag: '' },
+  { name: 'Sweat & Chill', thumb: POSTER('9c727c78-44f3-4e1e-97bf-e9102fcf343a'), video: 'https://drive.google.com/file/d/1GLZN1Uhi1XYOuYav83XblsbmF55TeXVO/view', ratio: '16/9', tag: '' },
+  { name: 'Wild Spirit',   thumb: POSTER('04ddef55-85d0-4997-95b0-ef56d94416cb'), video: 'https://drive.google.com/file/d/1Mm5B8PkrL82r8tMlT0tAs8ibM4oQB393/view', ratio: '16/9', tag: '' },
+  { name: 'Yerbalist',     thumb: POSTER('f9fab0e5-6caa-457c-821e-d1f75a538aea'), video: 'https://drive.google.com/file/d/1AUzDfxsN2GX3nfsslUAU7v0TegYgHByd/view', ratio: '16/9', tag: '' },
+];
+
+/* =====================================================================
+   2) TEXTOS EN / ES
+   ===================================================================== */
+const I18N = {
+  en: {
+    bio1: 'I specialize in crafting high performing video content that captivates audiences and drives results. I’ve helped brands boost engagement, grow their audience, and tell their stories in unforgettable ways.',
+    bio2: 'What I Bring to the Table:',
+    bio3: '| Expertise in DaVinci Resolve, Adobe Premiere Pro and After Effects for seamless video editing and motion graphics.',
+    bio4: '| Ability to manage fast-paced projects, meet tight deadlines, and deliver polished, professional results.',
+    bio5: '| A creative mindset that blends data-driven strategies with innovative storytelling to create content that resonates.',
+    bio6: 'Let’s Create Something Amazing Together!',
+    m_about: 'About Me', m_projects: 'Projects', m_contact: 'Contact',
+    my_projects: 'My Projects', experience: 'Experience', contact: 'Contact', about_me: 'About Me',
+    languages: 'Languages', connect: "Let's Connect", happy: 'Happy Clients', soon: 'Video coming soon', lang: 'Español'
+  },
+  es: {
+    bio1: 'Me especializo en crear contenido de video de alto rendimiento que cautiva audiencias y genera resultados. He ayudado a marcas a aumentar su engagement, crecer su audiencia y contar sus historias de forma inolvidable.',
+    bio2: 'Lo que aporto:',
+    bio3: '| Dominio de DaVinci Resolve, Adobe Premiere Pro y After Effects para una edición fluida y motion graphics de calidad.',
+    bio4: '| Capacidad para manejar proyectos de ritmo acelerado, cumplir plazos exigentes y entregar resultados pulidos y profesionales.',
+    bio5: '| Una mentalidad creativa que combina estrategias basadas en datos con narrativa innovadora para crear contenido que conecta.',
+    bio6: '¡Creemos algo increíble juntos!',
+    m_about: 'Sobre mí', m_projects: 'Proyectos', m_contact: 'Contacto',
+    my_projects: 'Mis proyectos', experience: 'Experiencia', contact: 'Contacto', about_me: 'Sobre mí',
+    languages: 'Idiomas', connect: 'Conectemos', happy: 'Clientes felices', soon: 'Video próximamente', lang: 'English'
+  }
+};
+let lang = 'en';
+try { lang = localStorage.getItem('lang') || 'en'; } catch (e) {}
+if (!I18N[lang]) lang = 'en';
+
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = I18N[lang][el.dataset.i18n]; });
+  document.getElementById('langBtn').textContent = I18N[lang].lang;
+  document.querySelectorAll('.clients small').forEach(el => el.textContent = I18N[lang].happy);
+  const soon = document.querySelector('.soon span'); if (soon) soon.textContent = I18N[lang].soon;
+  try { localStorage.setItem('lang', lang); } catch (e) {}
+}
+
+/* =====================================================================
+   3) COMPONENTES REUTILIZABLES
+   ===================================================================== */
+const ARROW = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l6-6M4 3h5v5"/></svg>';
+
+// Collage de portadas con columnas que se desplazan
+function buildCollage(el) {
+  const n = PROJECTS.length;
+  const cfg = [{ off: 0, d: 34, delay: -4 }, { off: 3, d: 42, delay: -14 }, { off: 5, d: 38, delay: -22 }];
+  el.innerHTML = cfg.map(c => {
+    const order = Array.from({ length: n }, (_, i) => PROJECTS[(i + c.off) % n].thumb);
+    const imgs = order.concat(order).map(src => `<img src="${src}" alt="" loading="lazy">`).join('');
+    return `<div class="c"><div style="--d:${c.d}s;--delay:${c.delay}s">${imgs}</div></div>`;
+  }).join('');
+}
+
+function faceSVG(bg, skin) {
+  return `<svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="15" fill="${bg}"/><circle cx="15" cy="16" r="8" fill="${skin}"/><circle cx="12" cy="15" r="1.1" fill="#3a2a2a"/><circle cx="18" cy="15" r="1.1" fill="#3a2a2a"/><path d="M11.5 19c1 1.4 2.2 2 3.5 2s2.5-.6 3.5-2" fill="none" stroke="#3a2a2a" stroke-width="1.1" stroke-linecap="round"/></svg>`;
+}
+
+function buildClients(el) {
+  const stars = [0,1,2,3,4].map(i => `<svg style="--s:${i}" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>`).join('');
+  el.innerHTML = `
+    <div class="stars">${stars}</div>
+    <div class="pct"><span class="count" data-to="100">100</span>%</div>
+    <small>${I18N[lang].happy}</small>
+    <div class="faces">${faceSVG('#f6a6e6', '#f3d2b8')}${faceSVG('#7ff0a6', '#e9c39e')}${faceSVG('#ffb27a', '#f0cfb4')}</div>`;
+}
+
+function buildApps(el) {
+  el.innerHTML = `
+    <div class="app dv" style="--bd:0s"><i></i></div>
+    <div class="app" style="--bd:.7s">Pr</div>
+    <div class="app" style="--bd:1.4s">Ae</div>`;
+}
+
+function buildSocials(el) {
+  el.innerHTML = `
+    <a class="round" href="https://www.instagram.com/thisis_jacques" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg></a>
+    <a class="round" href="https://www.linkedin.com/in/andresriveraz" target="_blank" rel="noopener" aria-label="LinkedIn"><b>in</b></a>`;
+}
+
+function buildList() {
+  const list = document.getElementById('projectList');
+  list.innerHTML = PROJECTS.map((p, i) => `
+    <button class="row" type="button" data-i="${i}" style="--i:${i}" aria-haspopup="dialog">
+      <span class="thumb"><img src="${p.thumb}" alt="" loading="lazy"></span>
+      <span class="name">${p.name.replace(/&/g, '&amp;')}</span>
+      <span class="tag">${p.tag || '▶ play'}</span>
+      <span class="go">${ARROW}</span>
+    </button>`).join('');
+}
+
+/* =====================================================================
+   4) RUTAS (home / projects / about / contact)
+   ===================================================================== */
+const VIEWS = ['home', 'projects', 'about', 'contact'];
+function route(arg) {
+  // Acepta un nombre de vista directo (clic) o lee el hash (carga inicial / botón atrás)
+  let name = typeof arg === 'string' ? arg : 'home';
+  if (typeof arg !== 'string') { try { name = (location.hash || '#home').slice(1); } catch (e) {} }
+  const view = VIEWS.includes(name) ? name : 'home';
+  VIEWS.forEach(v => document.getElementById('view-' + v).classList.toggle('active', v === view));
+  document.querySelectorAll('.menu a').forEach(a => a.classList.toggle('current', a.getAttribute('href') === '#' + view));
+  closeMenu();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  countUp(document.getElementById('view-' + view));
+}
+
+function countUp(scope) {
+  scope.querySelectorAll('.count').forEach(el => {
+    const to = +el.dataset.to; const t0 = performance.now(); const dur = 1400;
+    (function step(t) {
+      const k = Math.min(1, (t - t0) / dur);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(step);
+    })(t0);
+  });
+}
+
+/* Menú */
+const menuBtn = document.getElementById('menuBtn'), menu = document.getElementById('menu');
+function closeMenu() { menu.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+menuBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  const open = menu.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', String(open));
+});
+document.addEventListener('click', e => { if (!menu.contains(e.target)) closeMenu(); });
+document.getElementById('langBtn').addEventListener('click', () => { lang = lang === 'en' ? 'es' : 'en'; applyLang(); });
+
+/* Reloj */
+function tick() {
+  const d = new Date();
+  const hm = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  document.getElementById('clock').textContent = hm + ' ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+tick(); setInterval(tick, 15000);
+
+/* Copiar email */
+document.getElementById('emailBtn').addEventListener('click', e => {
+  if (e.target.closest('.go')) return;
+  const btn = e.currentTarget;
+  const done = () => { btn.classList.add('copied'); setTimeout(() => btn.classList.remove('copied'), 1600); };
+  if (navigator.clipboard) navigator.clipboard.writeText('andresjxqcs@gmail.com').then(done, done); else done();
+});
+
+/* =====================================================================
+   5) MODAL GLASS DE VIDEO (sin descarga)
+   ===================================================================== */
+const modal = document.getElementById('modal');
+const glass = document.getElementById('glass');
+const player = document.getElementById('player');
+let lastFocus = null;
+
+function driveId(url) {
+  const m = url.match(/\/d\/([\w-]{10,})/) || url.match(/[?&]id=([\w-]{10,})/);
+  return m ? m[1] : null;
+}
+
+function buildPlayer(p) {
+  player.innerHTML = '';
+  const [w, h] = p.ratio.split('/').map(Number);
+  glass.style.setProperty('--ratio', (w / h).toFixed(4));
+  player.style.setProperty('--ratio-css', p.ratio);
+
+  if (!p.video) {
+    player.innerHTML = `<div class="soon"><img src="${p.thumb}" alt=""><span>${I18N[lang].soon}</span></div>`;
+    return;
+  }
+  const id = driveId(p.video);
+  if (id) {
+    // Drive en modo "preview". El botón de "abrir en nueva ventana" de Drive queda
+    // tapado por el "shield" de abajo.
+    const f = document.createElement('iframe');
+    f.src = `https://drive.google.com/file/d/${id}/preview`;
+    f.allow = 'autoplay; fullscreen; encrypted-media';
+    f.allowFullscreen = true;
+    f.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation allow-forms allow-popups');
+    f.title = p.name;
+    player.appendChild(f);
+    const shield = document.createElement('div');   // tapa el icono de pop-out de Drive
+    shield.className = 'shield';
+    player.appendChild(shield);
+  } else {
+    const v = document.createElement('video');
+    v.src = p.video; v.controls = true; v.playsInline = true; v.preload = 'metadata';
+    v.setAttribute('controlsList', 'nodownload noplaybackrate');
+    v.setAttribute('disablePictureInPicture', '');
+    v.addEventListener('contextmenu', e => e.preventDefault());
+    player.appendChild(v);
+  }
+}
+
+function openModal(i) {
+  const p = PROJECTS[i];
+  lastFocus = document.activeElement;
+  document.getElementById('mTitle').textContent = p.name;
+  buildPlayer(p);
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('locked');
+  modal.querySelector('.x').focus();
+}
+function closeModal() {
+  if (!modal.classList.contains('open')) return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('locked');
+  setTimeout(() => { player.innerHTML = ''; }, 450);   // detiene la reproducción
+  if (lastFocus) lastFocus.focus();
+}
+modal.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMenu(); } });
+document.getElementById('projectList').addEventListener('click', e => {
+  const row = e.target.closest('.row'); if (row) openModal(+row.dataset.i);
+});
+
+/* =====================================================================
+   6) ARRANQUE
+   ===================================================================== */
+document.querySelectorAll('[data-collage]').forEach(buildCollage);
+document.querySelectorAll('[data-clients]').forEach(buildClients);
+document.querySelectorAll('[data-apps]').forEach(buildApps);
+document.querySelectorAll('[data-socials]').forEach(buildSocials);
+buildList();
+applyLang();
+/* Navegación por clic: no depende de la URL, así funciona también dentro
+   de vistas previas aisladas (iframes con sandbox) donde los enlaces "#..." fallan. */
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  e.preventDefault();
+  const name = a.getAttribute('href').slice(1);
+  route(name);
+  try { history.replaceState(null, '', '#' + name); } catch (err) { /* iframe aislado: se ignora */ }
+});
+window.addEventListener('hashchange', () => route());
+route();
+</script>
+</body>
+</html>
